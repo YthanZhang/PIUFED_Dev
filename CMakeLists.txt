@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(Platform_Independent_Utils_For_Embedded_Development C)
+project(Platform_Independent_Utils_For_Embedded_Development C CXX)
 
 # Optimization level for different compile options##############################
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
@@ -18,10 +18,14 @@ endif ()
 # End of optimization level for different compile options#######################
 
 set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 20)
 
 include_directories(PIUFED)
 add_subdirectory(PIUFED)
 
-add_executable(TestRun testMain.c)
+# Add Catch2
+include_directories(Catch2/src)
+add_subdirectory(Catch2)
 
-target_link_libraries(TestRun PIUFED)
+add_executable(TestRun testMain.cpp)
+target_link_libraries(TestRun PRIVATE PIUFED Catch2::Catch2WithMain)
