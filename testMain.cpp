@@ -71,6 +71,20 @@ TEST_CASE("Button input test", "[button]")
 
     piu_Button_tick(&button);
     REQUIRE(piu_Button_stableState(&button) == 1);
+    
+    button.stableLengthCounter = UINT16_MAX - 2;
+    button.stableCounter = UINT16_MAX - 2;
+
+    piu_Button_tick(&button);
+    piu_Button_tick(&button);
+    piu_Button_tick(&button);
+    
+    piu_Button_updateState(&button, false);
+    
+    piu_Button_tick(&button);
+    
+    REQUIRE(button.stableCounter == 0);
+    
 }
 
 
