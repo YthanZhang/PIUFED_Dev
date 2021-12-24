@@ -27,5 +27,5 @@ add_subdirectory(PIUFED)
 include_directories(Catch2/src)
 add_subdirectory(Catch2)
 
-add_executable(TestRun testMain.cpp)
+add_executable(TestRun testMain.cpp vtimer_test.cpp)
 target_link_libraries(TestRun PRIVATE PIUFED Catch2::Catch2WithMain)
