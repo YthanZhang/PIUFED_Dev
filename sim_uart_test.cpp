@@ -12,8 +12,8 @@
 
 bool tx = true;
 
-uint16_t rxVal = 0b1100110101;
-uint16_t txVal = 0b1110010011;
+uint16_t rxVal = 0b1111110000;
+uint16_t txVal = 0b1111110000;
 
 
 void setTxBit(bool txVal) { tx = txVal; }
@@ -52,7 +52,7 @@ TEST_CASE("Sim UART Test", "[sim_uart]")
         rxVal = rxVal >> 1;
     }
     
-    REQUIRE(piu_SimUART_getRx(&simUART) == 0b00110101);
+    REQUIRE(piu_SimUART_getRx(&simUART) == 0xF0);
     
     /** Test simultaneous Rx Tx ***********************************************/
     piu_SimUART_sendTx(&simUART, txVal & 0xFF);
@@ -71,11 +71,12 @@ TEST_CASE("Sim UART Test", "[sim_uart]")
     
     piu_SimUART_GPIOUpdate(&simUART, false);
     
-    while(!simUART.flag_rxFrameError)
+    rxVal = 0b1101010101;
+    while(!simUART.flag_rxComplete)
     {
         piu_SimUART_TIMUpdate(&simUART, rxVal & 0x01);
         rxVal = rxVal >> 1;
     }
     
-    REQUIRE(piu_SimUART_getRx(&simUART) == 0b00110101);
+    REQUIRE(piu_SimUART_getRx(&simUART) == 0b01010101);
 }
