@@ -22,8 +22,6 @@ void setTxBit(bool txVal) { tx = txVal; }
 piu_SimUART simUART;
 
 
-
-
 TEST_CASE("Sim UART Test", "[sim_uart]")
 {
     piu_SimUART_construct(&simUART, setTxBit);
@@ -33,7 +31,7 @@ TEST_CASE("Sim UART Test", "[sim_uart]")
     REQUIRE(tx);
     
     piu_SimUART_TIMUpdate(&simUART, true);
-    REQUIRE_FALSE(tx);
+    REQUIRE(!tx);
 
     while(piu_SimUART_TIMUpdate(&simUART, true))
     {
