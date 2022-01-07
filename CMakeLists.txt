@@ -24,8 +24,14 @@ include_directories(PIUFED)
 add_subdirectory(PIUFED)
 
 # Add Catch2
-include_directories(Catch2/src)
-add_subdirectory(Catch2)
+if (NOT DEFINED Catch2_DIR)
+    message(NOTICE "Catch2_DIR is not defined, using default path")
+    message(NOTICE " ${PROJECT_SOURCE_DIR}/Catch2")
+    message(NOTICE "Ignore this notice if no further error occurs.")
+    set(Catch2_DIR Catch2)
+endif ()
+include_directories(${Catch2_DIR})
+add_subdirectory(${Catch2_DIR} Catch2)
 
 add_executable(TestRun testMain.cpp vtimer_test.cpp margined_linear_test.cpp sim_uart_test.cpp)
 target_link_libraries(TestRun PRIVATE PIUFED Catch2::Catch2WithMain)
