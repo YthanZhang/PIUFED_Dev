@@ -132,7 +132,7 @@ PenaltyBreakComment: 40
 PenaltyBreakFirstLessLess: 90
 PenaltyBreakString: 90
 PenaltyBreakTemplateDeclaration: 0
-PenaltyExcessCharacter: 100
+PenaltyExcessCharacter: 50
 PenaltyReturnTypeOnItsOwnLine: 120
 
 # RawStringFormats:
