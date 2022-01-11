@@ -11,7 +11,7 @@ static bool flag_callback = false;
 void callback() { flag_callback = true; }
 
 
-TEST_CASE("virtual timer test", "[vtimer]")
+TEST_CASE("Virtual timer test", "[vtimer]")
 {
     piu_VTimer vtimer;
     piu_VTimer_construct(&vtimer, 3, piu_VTMode_OneShot, nullptr);
@@ -72,5 +72,20 @@ TEST_CASE("virtual timer test", "[vtimer]")
         REQUIRE(piu_VTimer_getOverflow(&vtimer));
         REQUIRE(piu_VTimer_getOverOverflow(&vtimer));
         REQUIRE(piu_VTimer_getCounter(&vtimer) == 0);
+    }
+    
+    SECTION("callback test")
+    {
+        piu_VTimer_setCallback(&vtimer, callback);
+        piu_VTimer_startCounter(&vtimer);
+        
+        REQUIRE_FALSE(flag_callback);
+        
+        for(uint8_t i = 0; i < 4; ++i)
+        {
+            piu_VTimer_tick(&vtimer);
+        }
+        
+        REQUIRE(flag_callback);
     }
 }
